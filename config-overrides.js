@@ -9,6 +9,7 @@ module.exports = override(
     addLessLoader({
         javascriptEnabled: true,
         modifyVars: {
+            '@font-family': 'PFDinDisplayPro-Reg',
             '@primary-color': '#76b828',
             '@border-radius-base': '0',
             '@border-radius-sm': '0',
