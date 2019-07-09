@@ -55,7 +55,7 @@ const Home = ({history}) => {
                         <Button type="primary" block onClick={toMap}>Далее</Button>
                     </div>
                 }
-                <Link to="/login">Персональный кабинет</Link>
+                <Link to="/auth">Персональный кабинет</Link>
             </Card>
         </Col>
     </Row>;

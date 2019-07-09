@@ -1,20 +1,18 @@
 import React from 'react';
 import './Auth.less';
-import {Card, Col, Row, Typography} from "antd";
-import logo from '../../assets/logo.svg';
-
-const {Text} = Typography;
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
+import Login from "./login/Login";
+import Registration from "./registration/Registration";
+import ForgotPassword from "./forgot/Forgot";
 
 const Auth = () => {
-    return <Row type="flex" justify="center" align="middle" className="auth">
-        <Col lg={6}>
-            <Card>
-                <img src={logo} alt="Usso Logo" className="logo"/>
-                <Text type="secondary" className="sub-title">Система подбора конструкций наружной рекламы по
-                    Узбекистану.</Text>
-            </Card>
-        </Col>
-    </Row>;
+    return <Router className="auth">
+        <Switch>
+            <Route exact path="/auth/" component={Login}/>
+            <Route path="/auth/forgot-password" component={ForgotPassword}/>
+            <Route path="/auth/registration" component={Registration}/>
+        </Switch>
+    </Router>;
 };
 
 export default Auth;

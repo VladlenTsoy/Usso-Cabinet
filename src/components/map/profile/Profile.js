@@ -15,7 +15,7 @@ const ProfileBlock = () => {
             <Avatar size={40} icon="user"/>
             <div className="container">
                 <div className="auth-profile-block">
-                    <Link to="/auth/login">Авторизация</Link>
+                    <Link to="/auth">Авторизация</Link>
                 </div>
                 <div className="change-region">
                     <Select defaultValue="all" className="select-form">
