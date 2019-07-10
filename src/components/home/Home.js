@@ -49,7 +49,7 @@ const Home = ({history}) => {
                     <div key="content">
                         <Select defaultValue={currentRegionId} className="select" onChange={selectCurrentRegion}>
                             {regions.map((country) =>
-                                <Option value={country.id} key={country.id}>{country.name}</Option>
+                                <Option value={country.id} key={country.id}>{country.title}</Option>
                             )}
                         </Select>
                         <Button type="primary" block onClick={toMap}>Далее</Button>

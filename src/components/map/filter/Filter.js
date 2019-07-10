@@ -4,7 +4,11 @@ import './Filter.less';
 
 const {Option} = Select;
 
-const FilterBlock = ({region}) => {
+const FilterBlock = ({region, constructions}): React.FC => {
+    useEffect(() => {
+
+    }, [constructions]);
+
     return <div className="filter-block">
         <Row gutter={15}>
             <Col lg={4}>
@@ -18,7 +22,7 @@ const FilterBlock = ({region}) => {
                 <Form.Item label="Район">
                     <Select defaultValue="all" className="select-form">
                         <Option value="all" key="all">Все</Option>
-                        {region.district.map(val => <Option value={val.id} key={val.id}>{val.name}</Option>)}
+                        {region.district.map((val) => <Option value={val.id} key={val.id}>{val.title}</Option>)}
                     </Select>
                 </Form.Item>
             </Col>
