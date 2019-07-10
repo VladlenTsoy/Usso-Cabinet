@@ -10,7 +10,7 @@ const {Text} = Typography;
 
 interface Region {
     id: number,
-    name: string,
+    title: string
 }
 
 const Home = ({history}) => {

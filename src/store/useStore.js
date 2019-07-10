@@ -25,7 +25,7 @@ const reducer = (state, action: { type: string, payload: any }) => {
 };
 
 // Create Store Provider for App
-export const StoreProvider = ({children}: any) => {
+export const StoreProvider = ({children}: any): any => {
     const [state, dispatch] = useReducer(reducer, initialState);
     return <StoreContext.Provider value={{state, dispatch}}>{children}</StoreContext.Provider>
 };

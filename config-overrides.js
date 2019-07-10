@@ -11,8 +11,8 @@ module.exports = override(
         modifyVars: {
             '@font-family': 'PFDinDisplayPro-Reg',
             '@primary-color': '#76b828',
-            '@border-radius-base': '0',
-            '@border-radius-sm': '0',
+            // '@border-radius-base': '0',
+            // '@border-radius-sm': '0',
         },
     }),
 );
