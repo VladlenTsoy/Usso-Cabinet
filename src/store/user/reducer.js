@@ -22,7 +22,7 @@ export interface User {
     group_id: number | null,
     access_id: number | null,
     lang_id: number | null,
-    coins: number,
+    coins: number
 }
 
 // Default

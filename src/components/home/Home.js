@@ -1,39 +1,43 @@
-import React, {useEffect, useState} from 'react';
-import './Home.less';
+// @flow
+import React, {useEffect, useState} from "react";
+import "./Home.less";
 import {Button, Card, Col, Row, Select, Typography, Icon} from "antd";
 import logo from "../../assets/logo.svg";
 import {Link, withRouter} from "react-router-dom";
 import {useStore} from "../../store/useStore";
+import type {Region} from "../../store/region/reducer";
+import {ADD_REGIONS} from "../../store/region/reducer";
 
 const {Option} = Select;
 const {Text} = Typography;
 
-interface Region {
-    id: number,
-    title: string
-}
 
-const Home = ({history}) => {
-    const [state] = useStore();
+const Home = ({history}): React.FC => {
+    const [state, dispatch] = useStore();
     const [currentRegionId, setCurrent] = useState(14);
-    const [loader, setLoader] = useState(true);
-    const [regions, setRegions]: Map<Region> = useState([]);
+    const [loader, setLoader] = useState(false);
+    const [regions, setRegions] = useState<Array<Region>>(state.region.all);
 
+    //
     useEffect(() => {
+        console.log("FETCH_REGIONS_HOME.JS");
         const fetch = async () => {
-            const response = await state.api.guest.get('regions');
+            setLoader(true);
+            const response = await state.api.guest.get("regions");
             setRegions(response.data);
+            dispatch({type: ADD_REGIONS, payload: response.data});
             setLoader(false);
         };
 
-        fetch().catch();
-    }, [state.api]);
+        if (!regions.length)
+            fetch().catch();
+    }, [state.api, dispatch, regions.length]);
 
-    const selectCurrentRegion = (id: number) => setCurrent(id);
+    //
+    const selectCurrentRegion = (id: number): void => setCurrent(id);
 
-    const toMap = () => {
-        history.push(`/map/${currentRegionId}`);
-    };
+    //
+    const toMap = (): void => history.push(`/map/${currentRegionId}`);
 
     return <Row type="flex" justify="center" align="middle" className="home">
         <Col lg={6}>
@@ -48,7 +52,7 @@ const Home = ({history}) => {
                     </div> :
                     <div key="content">
                         <Select defaultValue={currentRegionId} className="select" onChange={selectCurrentRegion}>
-                            {regions.map((country) =>
+                            {regions.map((country): any =>
                                 <Option value={country.id} key={country.id}>{country.title}</Option>
                             )}
                         </Select>

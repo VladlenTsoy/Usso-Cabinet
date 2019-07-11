@@ -15,12 +15,14 @@ const App = (): React.FC => {
     const [loader, setLoader]: boolean = useState(true);
     const [state, dispatch] = useStore();
 
-    // Check EON_API_TOKEN_ACCESS for auth
+    // Check USSO_API_TOKEN_ACCESS for auth
     useEffect(() => {
         if (state.api.token)
-            localStorage.setItem("EON_API_TOKEN_ACCESS", state.api.token);
-        if (localStorage.getItem("EON_API_TOKEN_ACCESS") !== null)
-            state.api.guest.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("EON_API_TOKEN_ACCESS");
+            localStorage.setItem("USSO_API_TOKEN_ACCESS", state.api.token);
+        if (localStorage.getItem("USSO_API_TOKEN_ACCESS") !== null) {
+            state.api.guest.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("USSO_API_TOKEN_ACCESS");
+            state.api.user_general.defaults.headers.common["Authorization"] = "Bearer " + localStorage.getItem("USSO_API_TOKEN_ACCESS");
+        }
     }, [state.api]);
 
     // Fetch current user data
@@ -34,7 +36,7 @@ const App = (): React.FC => {
             setLoader(false);
         };
         dataFetch().then();
-    }, [dispatch, state.api]);
+    }, [state.api]);
 
     return <Router className="App">
         {loader ?
