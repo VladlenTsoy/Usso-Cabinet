@@ -1,10 +1,10 @@
-// @flow
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import "./Map.less";
 import HeaderMapBlock from "./header/Header";
-import GoogleMapBlock from "./google-map/GoogleMap";
+import MapConstructions from "./map-constructions/MapConstructions";
 import {useDispatch, useSelector} from "react-redux";
 import {fetchRegionByIdAction} from "../../store/region/actions";
+import LoadingWithText from "../user/layouts/loading-with-text/LoadingWithText";
 
 const Map = ({match}): React.FC => {
     const {region} = useSelector((state): void => state);
@@ -17,8 +17,9 @@ const Map = ({match}): React.FC => {
 
     return <div className="map">
         <HeaderMapBlock/>
-        {
-            region.current ? <GoogleMapBlock mapPosition={{lat: region.current.lat, lng: region.current.lng}}/> : null
+        {region.current ?
+            <MapConstructions mapPosition={{lat: region.current.lat, lng: region.current.lng}}/> :
+            <LoadingWithText text="Загрузка региона..."/>
         }
     </div>;
 };

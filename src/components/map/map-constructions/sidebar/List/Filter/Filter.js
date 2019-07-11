@@ -3,13 +3,13 @@ import React, {useEffect, useState} from "react";
 import "./Filter.less";
 import {withRouter} from "react-router-dom";
 import {Select} from "antd";
-import type {Region} from "../../../../../store/region/reducer";
+import type {Region} from "../../../../../../store/region/reducer";
 import {useDispatch, useSelector} from "react-redux";
-import {fetchRegionsAction} from "../../../../../store/region/actions";
+import {fetchRegionsAction} from "../../../../../../store/region/actions";
 
 const {Option} = Select;
 
-const FilterBlock = ({match, history}): React.FC => {
+const FilterBlock = ({history}): React.FC => {
     const {construction, region} = useSelector((state): void => state);
     const [constructions] = useState(construction.region[region.current.id]);
     const dispatch = useDispatch();

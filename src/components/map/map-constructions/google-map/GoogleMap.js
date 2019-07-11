@@ -1,11 +1,11 @@
 import React from "react";
-import {GoogleMap, Marker, MarkerClusterer} from "@react-google-maps/api";
-import ClusterIcon from "../../../assets/cluster.svg";
+import {GoogleMap, Marker, MarkerClusterer} from "@react-google-maps/api/dist/index";
+import ClusterIcon from "../../../../assets/cluster.svg";
 
 /** @namespace google.maps.ControlPosition.LEFT_CENTER */
 /** @namespace google.maps.Point */
 
-const GoogleMapBlockV2 = ({mapPosition, constructions, onMarkerClick}): React.FC => {
+const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC => {
     return <GoogleMap
         mapContainerClassName="googleMapBlock"
         zoom={12}
@@ -55,4 +55,4 @@ const GoogleMapBlockV2 = ({mapPosition, constructions, onMarkerClick}): React.FC
     </GoogleMap>;
 };
 
-export default GoogleMapBlockV2;
+export default GoogleMapBlock;
