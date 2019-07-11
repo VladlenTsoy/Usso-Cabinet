@@ -10,23 +10,21 @@ import {fetchCurrentUserData} from "../store/user/actions";
 import Home from "./home/Home";
 import Map from "./map/Map";
 
-/** @namespace state.api.guest.defaults.headers.common */
-
 const App = (): React.FC => {
     const [loader, setLoader]: boolean = useState(true);
-    const {user} = useSelector((state): void => state);
+    const {api, user} = useSelector((state): void => state);
     const dispatch = useDispatch();
     const apiChangeAccess = (): void => dispatch(apiChangeAccessToken());
     const fetchCurrentUser = (): void => dispatch(fetchCurrentUserData());
 
     useEffect(() => {
-        const fetch = async () => {
-            apiChangeAccess();
-            await fetchCurrentUser();
-            setLoader(false);
-        };
-        fetch().then();
-    }, []);
+        apiChangeAccess();
+    }, [api.instance]);
+
+    useEffect(() => {
+        fetchCurrentUser()
+            .finally((): void => setLoader(false));
+    }, [api.instance]);
 
     return <Router className="App">
         {loader ?
