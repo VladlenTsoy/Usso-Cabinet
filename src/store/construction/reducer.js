@@ -1,12 +1,9 @@
 import {FETCH_CONSTRUCTIONS_BY_REGION_ID} from "./actions";
 
-// Default
-const defaultState = {
+export const constructionReducer = (state = {
     region: [],
     current: null,
-};
-
-export const constructionReducer = (state = defaultState, action): any => {
+}, action): any => {
     switch (action.type) {
         case FETCH_CONSTRUCTIONS_BY_REGION_ID:
             return {

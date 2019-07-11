@@ -1,10 +1,8 @@
 import {DELETE_CURRENT_USER_DATA, FETCH_CURRENT_USER_DATA} from "./actions";
 
-const defaultState = {
+export const userReducer = (state = {
     id: null,
-};
-
-export const userReducer = (state = defaultState, action): any => {
+}, action): any => {
     switch (action.type) {
         case FETCH_CURRENT_USER_DATA:
             return {

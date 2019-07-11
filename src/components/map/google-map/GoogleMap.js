@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useLoadScript} from "@react-google-maps/api";
 import {Spin} from "antd";
-import SidebarBlock from "../sidebar/Sidebar";
+// import SidebarBlock from "../sidebar/Sidebar";
 import GoogleMapBlockV2 from "./Map";
 
 const GoogleMapBlock = ({mapPosition, constructions}): React.FC => {
@@ -18,12 +18,12 @@ const GoogleMapBlock = ({mapPosition, constructions}): React.FC => {
         <GoogleMapBlockV2 mapPosition={mapPosition}
                           constructions={constructions}
                           onMarkerClick={onMarkerClick}/>
-        <SidebarBlock visible={visible}
-                      setVisible={setVisible}
-                      construction={construction}
-                      setConstruction={setConstruction}
-                      constructions={constructions}
-                      onMarkerClick={onMarkerClick}/>
+        {/*<SidebarBlock visible={visible}*/}
+        {/*              setVisible={setVisible}*/}
+        {/*              construction={construction}*/}
+        {/*              setConstruction={setConstruction}*/}
+        {/*              constructions={constructions}*/}
+        {/*              onMarkerClick={onMarkerClick}/>*/}
     </div>;
 
     return isLoaded ? renderMap() : <div className="loader-map-block"><Spin/></div>;

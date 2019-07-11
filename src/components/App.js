@@ -8,7 +8,7 @@ import {apiChangeAccessToken} from "../store/api/actions";
 import {fetchCurrentUserData} from "../store/user/actions";
 // import Auth from "./auth/Auth";
 import Home from "./home/Home";
-// import Map from "./map/Map";
+import Map from "./map/Map";
 
 /** @namespace state.api.guest.defaults.headers.common */
 
@@ -38,7 +38,7 @@ const App = (): React.FC => {
             </div> :
             <Switch>
                 <Route exact path="/" component={Home}/>
-                {/*<Route path="/map/:id" component={Map}/>*/}
+                <Route path="/map/:id" component={Map}/>
                 <Route path="/auth" render={(): any => user.id ? <div>auth</div> : <div>no auth</div>}/>
             </Switch>
         }

@@ -1,4 +1,4 @@
-import {FETCH_REGIONS} from "./actions";
+import {FETCH_REGION_BY_ID, FETCH_REGIONS} from "./actions";
 
 export interface Region {
     id: number,
@@ -6,24 +6,25 @@ export interface Region {
     lat: number,
     lng: number
 }
+// interface DefaultState {
+//     all: Array<Region>,
+//     current: Region | null
+// }
 
-interface DefaultState {
-    all: Array<Region>,
-    current: Region | null
-}
-
-// Default
-const defaultState: DefaultState = {
+export const regionReducer = (state = {
     all: [],
     current: null,
-};
-
-export const regionReducer = (state = defaultState, action): any => {
+}, action): any => {
     switch (action.type) {
         case FETCH_REGIONS:
             return {
                 ...state,
                 all: action.payload
+            };
+        case FETCH_REGION_BY_ID:
+            return {
+                ...state,
+                current: action.payload
             };
         default:
             return state;

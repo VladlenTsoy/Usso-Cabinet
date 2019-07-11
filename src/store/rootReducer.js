@@ -9,7 +9,7 @@ const rootReducer = combineReducers({
     api: apiReducer,
     user: userReducer,
     region: regionReducer,
-    construction: constructionReducer(),
+    construction: constructionReducer,
 });
 
 export const store = createStore(rootReducer, applyMiddleware(thunk));

@@ -3,38 +3,28 @@ import React, {useEffect, useState} from "react";
 import "./Map.less";
 import HeaderMapBlock from "./header/Header";
 import GoogleMapBlock from "./google-map/GoogleMap";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchRegionByIdAction} from "../../store/region/actions";
+import {fetchConstructionsByRegionId} from "../../store/construction/actions";
 
 const Map = ({match}): React.FC => {
-    const [state, dispatch] = useStore();
-    const [region, setRegion] = useState(null);
+    const {region, construction} = useSelector((state): void => state);
+    const dispatch = useDispatch();
+    const fetchRegions = (): void => dispatch(fetchRegionByIdAction(match.params.id));
+    const fetchConstructions = (): void => dispatch(fetchConstructionsByRegionId(match.params.id));
 
-    // useEffect(() => {
-    //     const fetch = async () => {
-    //         const response = await state.api.guest.get(`constructions/region/${match.params.id}`);
-    //         dispatch({type: ADD_CONSTRUCTIONS_BY_REGION_ID, payload: {[match.params.id]: response.data}});
-    //         setConstructions(response.data);
-    //     };
-    //
-    //     if (!state.construction.region[match.params.id])
-    //         fetch().catch();
-    // }, [match.params.id, state.api]);
-    //
-    // useEffect(() => {
-    //     const fetch = async () => {
-    //         const response = await state.api.guest.get(`region/${match.params.id}`);
-    //         dispatch({type: SELECT_REGION, payload: response.data});
-    //         setRegion(response.data);
-    //     };
-    //
-    //     fetch().catch();
-    // }, [match.params.id, state.api]);
+    console.log(region.current, construction.region[match.params.id]);
+    useEffect(() => {
+        fetchRegions();
+        fetchConstructions();
+    }, [match.params.id]);
 
     return <div className="map">
         <HeaderMapBlock/>
         {
-            region ? <GoogleMapBlock
-                mapPosition={{lat: region.lat, lng: region.lng}}
-                constructions={constructions}
+            region.current ? <GoogleMapBlock
+                mapPosition={{lat: region.current.lat, lng: region.current.lng}}
+                constructions={construction.region[match.params.id]||[]}
             /> : null
         }
     </div>;
