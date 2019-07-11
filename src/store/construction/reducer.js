@@ -1,37 +1,19 @@
-export const ADD_CONSTRUCTIONS_BY_REGION_ID = "ADD_CONSTRUCTIONS_BY_REGION_ID";
-
-export interface Construction {
-    id: number,
-    zone: number,
-    title: string,
-    side: string,
-    passport: string,
-    region: string,
-    region_id: number,
-    district: string,
-    district_id: number,
-    type_id: number,
-    type: string,
-    format_id: number,
-    format: string
-}
-
-interface defaultState {
-    region: Array<Array<Construction>>,
-    current: Construction | null
-}
+import {FETCH_CONSTRUCTIONS_BY_REGION_ID} from "./actions";
 
 // Default
-export const defaultConstructionState: defaultState = {
+const defaultState = {
     region: [],
     current: null,
 };
 
-export const constructionAction = {
-    [ADD_CONSTRUCTIONS_BY_REGION_ID]: (value: Array<Construction>, state): any => ({
-        construction: {
-            ...state.region,
-            region: value
-        }
-    }),
+export const constructionReducer = (state = defaultState, action): any => {
+    switch (action.type) {
+        case FETCH_CONSTRUCTIONS_BY_REGION_ID:
+            return {
+                ...state,
+                region: {[action.regionId]: action.payload}
+            };
+        default:
+            return state;
+    }
 };

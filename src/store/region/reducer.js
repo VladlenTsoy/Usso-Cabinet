@@ -1,5 +1,4 @@
-export const ADD_REGIONS = "ADD_REGIONS";
-export const SELECT_REGION = "SELECT_REGION";
+import {FETCH_REGIONS} from "./actions";
 
 export interface Region {
     id: number,
@@ -8,18 +7,25 @@ export interface Region {
     lng: number
 }
 
-interface defaultState {
+interface DefaultState {
     all: Array<Region>,
     current: Region | null
 }
 
 // Default
-export const defaultRegionState: defaultState = {
+const defaultState: DefaultState = {
     all: [],
     current: null,
 };
 
-export const regionAction = {
-    [ADD_REGIONS]: (value: Array<Region>, state): any => ({region: {...state.region, all: value}}),
-    [SELECT_REGION]: (value: Region, state): any => ({region: {...state.region, current: value}}),
+export const regionReducer = (state = defaultState, action): any => {
+    switch (action.type) {
+        case FETCH_REGIONS:
+            return {
+                ...state,
+                all: action.payload
+            };
+        default:
+            return state;
+    }
 };

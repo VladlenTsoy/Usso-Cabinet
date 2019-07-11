@@ -1,24 +1,21 @@
-const axios = require("axios");
+import axios from "axios";
+import {API_CHANGE_ACCESS_TOKEN} from "./actions";
 
-export const API_CHANGE_ACCESS_TOKEN = "API_CHANGE_ACCESS_TOKEN";
-
-// const DOMAIN_API = 'http://api2.eon.uz/api';
 const DOMAIN_API = "http://api2.usso.loc/api";
 
-// Default
-export const defaultApiState = {
+const defaultState = {
     domain: DOMAIN_API,
-    token: localStorage.getItem("USSO_API_TOKEN_ACCESS"),
-    axios: axios,
-    guest: axios.create({baseURL: DOMAIN_API}),
-    user_general: axios.create({baseURL: DOMAIN_API + "/user"}),
-    user_access: axios.create({baseURL: DOMAIN_API + "/user/admin"})
+    instance: axios.create({baseURL: DOMAIN_API}),
 };
 
-/**
- * Actions
- * API_CHANGE_ACCESS_TOKEN = Change key for auth
- */
-export const apiAction = {
-    [API_CHANGE_ACCESS_TOKEN]: (value: string, state): any => ({api: {...state.api, token: value}})
+export const apiReducer = (state = defaultState, action): any => {
+    switch (action.type) {
+        case API_CHANGE_ACCESS_TOKEN:
+            return {
+                ...state
+            };
+        default:
+            return state;
+
+    }
 };

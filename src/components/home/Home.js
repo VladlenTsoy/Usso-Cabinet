@@ -4,34 +4,30 @@ import "./Home.less";
 import {Button, Card, Col, Row, Select, Typography, Icon} from "antd";
 import logo from "../../assets/logo.svg";
 import {Link, withRouter} from "react-router-dom";
-import {useStore} from "../../store/useStore";
-import type {Region} from "../../store/region/reducer";
-import {ADD_REGIONS} from "../../store/region/reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchRegionsAction} from "../../store/region/actions";
 
 const {Option} = Select;
 const {Text} = Typography;
 
-
 const Home = ({history}): React.FC => {
-    const [state, dispatch] = useStore();
     const [currentRegionId, setCurrent] = useState(14);
     const [loader, setLoader] = useState(false);
-    const [regions, setRegions] = useState<Array<Region>>(state.region.all);
+    const {region} = useSelector((state): void => state);
+    const dispatch = useDispatch();
+    const fetchRegions = (): void => dispatch(fetchRegionsAction());
 
     //
     useEffect(() => {
-        console.log("FETCH_REGIONS_HOME.JS");
         const fetch = async () => {
             setLoader(true);
-            const response = await state.api.guest.get("regions");
-            setRegions(response.data);
-            dispatch({type: ADD_REGIONS, payload: response.data});
+            await fetchRegions();
             setLoader(false);
         };
 
-        if (!regions.length)
-            fetch().catch();
-    }, [state.api, dispatch, regions.length]);
+        if (!region.all.length)
+            fetch().then();
+    }, [region.all]);
 
     //
     const selectCurrentRegion = (id: number): void => setCurrent(id);
@@ -52,7 +48,7 @@ const Home = ({history}): React.FC => {
                     </div> :
                     <div key="content">
                         <Select defaultValue={currentRegionId} className="select" onChange={selectCurrentRegion}>
-                            {regions.map((country): any =>
+                            {region.all.map((country): any =>
                                 <Option value={country.id} key={country.id}>{country.title}</Option>
                             )}
                         </Select>
