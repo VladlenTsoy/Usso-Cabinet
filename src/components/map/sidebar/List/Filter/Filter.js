@@ -3,36 +3,28 @@ import React, {useEffect, useState} from "react";
 import "./Filter.less";
 import {withRouter} from "react-router-dom";
 import {Select} from "antd";
-import {useStore} from "../../../../../store/useStore";
-import {ADD_REGIONS} from "../../../../../store/region/reducer";
 import type {Region} from "../../../../../store/region/reducer";
+import {useDispatch, useSelector} from "react-redux";
+import {fetchRegionsAction} from "../../../../../store/region/actions";
 
 const {Option} = Select;
 
 const FilterBlock = ({match, history}): React.FC => {
-    const [state, dispatch] = useStore();
-    const [constructions] = useState(state.construction.region[match.params.id] || []);
-    const [regions, setRegions] = useState<Array<Region>>(state.region.all);
+    const {construction, region} = useSelector((state): void => state);
+    const [constructions] = useState(construction.region[region.current.id]);
+    const dispatch = useDispatch();
+    const fetchRegions = (): void => dispatch(fetchRegionsAction());
     const [zones, setZones] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [types, setTypes] = useState([]);
     const [formats, setFormats] = useState([]);
     const [statuses, setStatuses] = useState([]);
 
-    useEffect((): any => {
-        let cancel = false;
-        const fetch = async () => {
-            const response = await state.api.guest.get("regions");
-            if (cancel) return;
-            setRegions(response.data);
-            dispatch({type: ADD_REGIONS, payload: response.data});
-        };
-
-        if (!regions.length)
-            fetch().catch();
-
-        return (): void => (cancel = true);
-    }, [state.api, regions.length]);
+    //
+    useEffect(() => {
+        if (!region.all.length)
+            fetchRegions();
+    }, [region.all]);
 
     useEffect(() => {
         const tmp = {
@@ -62,9 +54,9 @@ const FilterBlock = ({match, history}): React.FC => {
     const selectRegion = (id: number): void => history.push(`/map/${id}`);
 
     return <div className="filter-block">
-        <Select defaultValue={state.region.current.id} loading={!regions.length} onChange={selectRegion}>
-            {regions.length ?
-                regions.map((region: Region): any =>
+        <Select defaultValue={region.current.id} loading={!region.all.length} onChange={selectRegion}>
+            {region.all.length ?
+                region.all.map((region: Region): any =>
                     <Option key={region.id} value={region.id}>{region.title}</Option>)
                 : null}
         </Select>

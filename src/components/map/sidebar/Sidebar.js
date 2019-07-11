@@ -1,11 +1,11 @@
 import React from "react";
 import "./Sidebar.less";
-import {Drawer, Icon, Button, List, Select} from "antd";
+import {Drawer} from "antd";
 import ConstructionBlock from "./Construction/Construction";
 import ListBlock from "./List/List";
 
 
-const SidebarBlock = ({visible, setVisible, construction, setConstruction, constructions, onMarkerClick}): React.FC => {
+const SidebarBlock = ({visible, setVisible, currentConstruction, setConstruction, constructions, onMarkerClick}): React.FC => {
     const back = (): void => setConstruction(null);
 
     const close = (): any => {
@@ -20,11 +20,10 @@ const SidebarBlock = ({visible, setVisible, construction, setConstruction, const
         onClose={(): void => setVisible(false)}
         visible={visible}
     >
-        {construction ? <ConstructionBlock construction={construction} close={close} back={back}/> :
-            <ListBlock close={close} constructions={constructions} onMarkerClick={onMarkerClick}/>}
-        {/*<div className="filter-side-block side-block"></div>*/}
-        {/*<div className="construction-side-block side-block"></div>*/}
-
+        {currentConstruction ?
+            <ConstructionBlock construction={currentConstruction} close={close} back={back}/> :
+            <ListBlock close={close} constructions={constructions} onMarkerClick={onMarkerClick}/>
+        }
     </Drawer>;
 };
 
