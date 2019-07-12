@@ -10,7 +10,6 @@ import {
 import {useDispatch, useSelector} from "react-redux";
 import LoadingWithText from "../../user/layouts/loading-with-text/LoadingWithText";
 
-
 const MapV2 = ({mapPosition, regionConstructions}): React.FC => {
     const [visible, setVisible] = useState(false);
     const [position, setPosition] = useState(mapPosition);

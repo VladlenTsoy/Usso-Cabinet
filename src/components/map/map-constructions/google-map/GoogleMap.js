@@ -1,13 +1,13 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {GoogleMap, Marker, MarkerClusterer} from "@react-google-maps/api/dist/index";
 import ClusterIcon from "../../../../assets/cluster.svg";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 
 /** @namespace google.maps.ControlPosition.LEFT_CENTER */
 /** @namespace window.google.maps.Animation.BOUNCE */
 /** @namespace google.maps.Point */
 
-const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC => {
+const GoogleMapBlock = ({mapPosition, onMarkerClick}): React.FC => {
     const {construction} = useSelector((state): void => state);
     return <GoogleMap
         mapContainerClassName="googleMapBlock"

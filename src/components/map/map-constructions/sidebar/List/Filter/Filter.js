@@ -1,5 +1,5 @@
 // @flow
-import React, {useEffect, useState} from "react";
+import React from "react";
 import "./Filter.less";
 import {withRouter} from "react-router-dom";
 import {Form, Select} from "antd";
