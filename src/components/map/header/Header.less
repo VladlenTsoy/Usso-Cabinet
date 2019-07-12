@@ -1,13 +1,33 @@
 .profile-block {
   position: absolute;
-  top: 30px;
-  left: 30px;
+  top: 10px;
+  left: 10px;
   z-index: 3;
   display: flex;
   align-items: center;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 5px 10px 0 rgba(0,0,0,0.15);
+
+  .back-block {
+    margin-right: 2rem;
+    text-align: center;
+    cursor: pointer;
+    height: 25px;
+
+    i {
+      font-size: 25px;
+    }
+
+    span {
+      display: block;
+    }
+  }
 
   .logo {
     width: 90px;
+    margin-right: 2rem;
 
     img {
       width: 100%;
@@ -15,11 +35,13 @@
   }
 
   .avatar-block {
-    margin-left: 1.5rem;
     background: white;
-    padding: 0.5rem;
     display: flex;
     align-items: center;
-    border-radius: 15px 15px 0 15px ;
+    border-radius: 15px 15px 0 15px;
+
+    .ant-avatar{
+      margin-right: 1rem;
+    }
   }
 }

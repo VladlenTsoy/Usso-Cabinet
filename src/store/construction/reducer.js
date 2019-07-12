@@ -3,7 +3,7 @@ import {FETCH_CONSTRUCTIONS_BY_REGION_ID, SET_CONSTRUCTIONS_FOR_FILTERS, SET_CUR
 export const constructionReducer = (state = {
     region: [],
     filters: {
-        all:[],
+        all: [],
         zone: [],
         district_id: [],
         type_id: [],
@@ -16,7 +16,7 @@ export const constructionReducer = (state = {
         case FETCH_CONSTRUCTIONS_BY_REGION_ID:
             return {
                 ...state,
-                region: {[action.regionId]: action.payload}
+                region: {...state.region, [action.regionId]: action.payload}
             };
         case SET_CURRENT_CONSTRUCTION:
             return {
@@ -26,7 +26,7 @@ export const constructionReducer = (state = {
         case SET_CONSTRUCTIONS_FOR_FILTERS:
             return {
                 ...state,
-                filters: {[action.filter]: action.payload}
+                filters: {...state.filters, [action.filter]: action.payload}
             };
         default:
             return state;

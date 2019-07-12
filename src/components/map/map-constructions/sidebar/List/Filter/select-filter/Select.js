@@ -13,11 +13,18 @@ const SelectFilterBlock = ({title, name, value, parent}): React.FC => {
 
     useEffect(() => {
         let temp = [];
-        construction.filters[parent].map((construction): any => {
-            temp[construction[name]] = construction[value || name];
-        });
+        (construction.filters[parent].length ? construction.filters[parent] : construction.filters["all"])
+            .map((construction): any => {
+                temp[construction[name]] = construction[value || name];
+            });
         setFilters(temp);
     }, [construction.filters[parent]]);
+
+    useEffect(() => {
+        dispatch(setConstructionsForFiltersAction(construction.filters[parent].filter((construction) => {
+            filters.includes(construction[value]);
+        })));
+    }, [filters]);
 
     const changeSelect = (val): void =>
         dispatch(setConstructionsForFiltersAction(val === "all" ? constructions : constructions.filter((construction): any => construction[name] === val), name));
