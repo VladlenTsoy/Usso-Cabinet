@@ -4,20 +4,16 @@ import {Drawer} from "antd";
 import ConstructionBlock from "./Construction/Construction";
 import ListBlock from "./List/List";
 
-
 const SidebarBlock = ({visible, setVisible, currentConstruction, setConstruction, constructions, onMarkerClick}): React.FC => {
     const back = (): void => setConstruction(null);
-
-    const close = (): any => {
-        setVisible(false);
-        setConstruction(null);
-    };
+    const close = (): void => setVisible(false);
 
     return <Drawer
         width={500}
         mask={false}
         closable={false}
-        onClose={(): void => setVisible(false)}
+        onClose={close}
+        afterVisibleChange={(vis): void => (!vis) ? back() : null}
         visible={visible}
     >
         {currentConstruction ?

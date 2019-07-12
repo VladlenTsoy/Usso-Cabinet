@@ -25,7 +25,7 @@ const MapConstructions = ({mapPosition}): React.FC => {
     };
 
     const renderMap = construction.region[region.current.id] ?
-        <div style={{height: "100%"}}>
+        <div className="mapConstructionBlock">
             <GoogleMapBlock
                 mapPosition={mapPosition}
                 constructions={construction.region[region.current.id]}

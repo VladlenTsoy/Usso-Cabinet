@@ -3,8 +3,22 @@
   display: grid;
   grid-template-rows: 1fr 1fr;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 1rem;
+  grid-gap: 0.5rem 1rem;
 
-  .ant-select {
+  .ant-form-item {
+    margin: 0;
+    width: 100%;
+
+    .ant-form-item-label {
+      line-height: 19px;
+      label{
+        color: rgba(0, 0, 0, 0.45);
+      }
+    }
+
+    .ant-select {
+      width: 100%;
+      max-width: 140px;
+    }
   }
 }

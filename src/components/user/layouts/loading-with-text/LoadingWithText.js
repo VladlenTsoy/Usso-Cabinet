@@ -6,7 +6,7 @@ const LoadingWithText = ({text}): React.FC => {
     return <div className="loader-map-block">
         <div>
             <Icon type="loading"/>
-            <p>Загрузка конструкций...</p>
+            <p>{text}</p>
         </div>
     </div>;
 };

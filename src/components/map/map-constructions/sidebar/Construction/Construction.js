@@ -1,10 +1,24 @@
 import React from "react";
 import "./Construction.less";
 import {Button, Icon} from "antd";
+import {useDispatch, useSelector} from "react-redux";
+import {addToCartAction, removeFromCartAction} from "../../../../../store/cart/actions";
 
 const ButtonGroup = Button.Group;
 
 const ConstructionBlock = ({construction, close, back}): React.FC => {
+    const {cart} = useSelector((state): void => state);
+    const dispatch = useDispatch();
+
+    console.log(cart);
+    const addToCart = () => {
+        dispatch(addToCartAction(construction.id));
+    };
+
+    const removeFromCart = () => {
+        dispatch(removeFromCartAction(construction.id));
+    };
+
     return <div className="construction-side-block side-block">
         <div className="header">
             <Icon type="arrow-left" onClick={back}/>
@@ -18,7 +32,10 @@ const ConstructionBlock = ({construction, close, back}): React.FC => {
 
         </div>
         <div className="actions-block">
-            <Button type="primary" icon="shopping-cart">Добавить в корзину</Button>
+            {cart.includes(construction.id) ?
+                <Button type="danger" icon="delete" onClick={removeFromCart}>Удалить с корзины</Button> :
+                <Button type="primary" icon="shopping-cart" onClick={addToCart}>Добавить в корзину</Button>
+            }
             <ButtonGroup>
                 <Button disabled>Строна A</Button>
                 <Button>Строна B</Button>
