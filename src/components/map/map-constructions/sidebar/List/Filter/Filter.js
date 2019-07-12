@@ -5,13 +5,13 @@ import {withRouter} from "react-router-dom";
 import {Form, Select} from "antd";
 import type {Region} from "../../../../../../store/region/reducer";
 import {useSelector} from "react-redux";
+import SelectFilterBlock from "./select-filter/Select";
 
 const {Option} = Select;
 
-const FilterBlock = ({history}): React.FC => {
+const FilterBlock = ({history, setConstructions}): React.FC => {
     const {construction, region} = useSelector((state): void => state);
     const [constructions] = useState(construction.region[region.current.id]);
-
     const [zones, setZones] = useState([]);
     const [districts, setDistricts] = useState([]);
     const [types, setTypes] = useState([]);
@@ -54,51 +54,12 @@ const FilterBlock = ({history}): React.FC => {
                     : null}
             </Select>
         </Form.Item>
-        <Form.Item label="Зона">
-            <Select defaultValue="all">
-                <Option value="all">Все</Option>
-                {zones.length ?
-                    zones.map((zone, key): any =>
-                        <Option key={key} value={key}>{zone}</Option>)
-                    : null}
-            </Select>
-        </Form.Item>
-        <Form.Item label="Район">
-            <Select defaultValue="all">
-                <Option value="all">Все</Option>
-                {districts.length ?
-                    districts.map((district, key): any =>
-                        <Option key={key} value={key}>{district}</Option>)
-                    : null}
-            </Select>
-        </Form.Item>
-        <Form.Item label="Тип">
-            <Select defaultValue="all">
-                <Option value="all">Все</Option>
-                {types.length ?
-                    types.map((type, key): any =>
-                        <Option key={key} value={key}>{type}</Option>)
-                    : null}
-            </Select>
-        </Form.Item>
-        <Form.Item label="Формат">
-            <Select defaultValue="all">
-                <Option value="all">Все</Option>
-                {formats.length ?
-                    formats.map((format, key): any =>
-                        <Option key={key} value={key}>{format}</Option>)
-                    : null}
-            </Select>
-        </Form.Item>
-        <Form.Item label="Статус">
-            <Select defaultValue="all">
-                <Option value="all">Все</Option>
-                {statuses.length ?
-                    statuses.map((status, key): any =>
-                        <Option key={key} value={key}>{status}</Option>)
-                    : null}
-            </Select>
-        </Form.Item>
+
+        <SelectFilterBlock title="Зона" name="zone" values={zones} setConstructions={setConstructions}/>
+        <SelectFilterBlock title="Район" name="district_id" values={districts} setConstructions={setConstructions}/>
+        <SelectFilterBlock title="Тип" name="type_id" values={types} setConstructions={setConstructions}/>
+        <SelectFilterBlock title="Формат" name="format_id" values={formats} setConstructions={setConstructions}/>
+        <SelectFilterBlock title="Статус" name="status" values={statuses} setConstructions={setConstructions}/>
     </div>;
 };
 

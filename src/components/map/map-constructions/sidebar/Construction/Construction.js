@@ -7,16 +7,17 @@ import {addToCartAction, removeFromCartAction} from "../../../../../store/cart/a
 const ButtonGroup = Button.Group;
 
 const ConstructionBlock = ({construction, close, back}): React.FC => {
-    const {cart} = useSelector((state): void => state);
+    const {cart, user} = useSelector((state): void => state);
     const dispatch = useDispatch();
 
-    console.log(cart);
-    const addToCart = () => {
-        dispatch(addToCartAction(construction.id));
+    const addToCart = async (): any => {
+        if (!user.id)
+            alert("no-auth");
+        return await dispatch(addToCartAction(construction.id));
     };
 
-    const removeFromCart = () => {
-        dispatch(removeFromCartAction(construction.id));
+    const removeFromCart = async (): any => {
+        return await dispatch(removeFromCartAction(construction.id));
     };
 
     return <div className="construction-side-block side-block">

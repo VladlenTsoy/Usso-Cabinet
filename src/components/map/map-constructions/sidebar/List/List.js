@@ -3,13 +3,13 @@ import './List.less';
 import {Icon, List} from "antd";
 import FilterBlock from "./Filter/Filter";
 
-const ListBlock = ({constructions, close, onMarkerClick}): React.FC => {
+const ListBlock = ({constructions, close, onMarkerClick, setConstructions}): React.FC => {
     return <div className="constructions-side-block side-block">
         <div className="header">
             <div className="title-block">Конструкции</div>
             <Icon type="close" onClick={close}/>
         </div>
-        <FilterBlock/>
+        <FilterBlock setConstructions={setConstructions}/>
         <List
             className="list-block"
             itemLayout="horizontal"

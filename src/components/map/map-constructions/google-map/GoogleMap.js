@@ -1,11 +1,14 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {GoogleMap, Marker, MarkerClusterer} from "@react-google-maps/api/dist/index";
 import ClusterIcon from "../../../../assets/cluster.svg";
+import {useDispatch, useSelector} from "react-redux";
 
 /** @namespace google.maps.ControlPosition.LEFT_CENTER */
+/** @namespace window.google.maps.Animation.BOUNCE */
 /** @namespace google.maps.Point */
 
 const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC => {
+    const {construction} = useSelector((state): void => state);
     return <GoogleMap
         mapContainerClassName="googleMapBlock"
         zoom={12}
@@ -25,6 +28,7 @@ const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC =
         <MarkerClusterer
             averageCenter
             enableRetinaIcons
+            maxZoom={14}
             gridSize={60}
             styles={[{
                 textColor: "white",
@@ -33,9 +37,9 @@ const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC =
                 width: 70
             }]}
         >
-            {(clusterer): any => constructions.map((construction, key): void =>
-                <Marker position={construction.position}
-                        onClick={(e): void => onMarkerClick(e, construction)}
+            {(clusterer): any => constructions.map((val, key): void =>
+                <Marker position={val.position}
+                        onClick={(e): void => onMarkerClick(e, val)}
                         key={key}
                         clusterer={clusterer}
                         icon={{
@@ -43,7 +47,9 @@ const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC =
                                 "\tc-2.5,2.7-3.6,5.9-3,9.6c0.4,2.4,1.7,4.4,3.1,6.3c4.5,6,7.1,12.7,7.9,20.2c0,0.4,0.1,0.6,0.6,0.6c0.4,0,0.4-0.3,0.5-0.6\n" +
                                 "\tc0.7-6.7,3-12.7,6.6-18.3c0.9-1.4,2.1-2.7,2.9-4.2c0.9-1.7,1.7-3.4,1.7-5.3C23.6,6.6,20,1.8,14.7,0.4z M11.7,17.5l-6-6l6-6l6,6\n" +
                                 "\tL11.7,17.5z",
-                            fillColor: "#76B828",
+                            fillColor: construction.current && construction.current.id === val.id ?
+                                "red" : val.status ?
+                                    "#76B828" : "#737372",
                             fillOpacity: 1,
                             scale: 1.0,
                             strokeWeight: 0,

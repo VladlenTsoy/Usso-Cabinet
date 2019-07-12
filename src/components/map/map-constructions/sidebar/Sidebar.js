@@ -3,10 +3,14 @@ import "./Sidebar.less";
 import {Drawer} from "antd";
 import ConstructionBlock from "./Construction/Construction";
 import ListBlock from "./List/List";
+import {setCurrentConstructionAction} from "../../../../store/construction/actions";
+import {useDispatch, useSelector} from "react-redux";
 
-const SidebarBlock = ({visible, setVisible, currentConstruction, setConstruction, constructions, onMarkerClick}): React.FC => {
-    const back = (): void => setConstruction(null);
-    const close = (): void => setVisible(false);
+const SidebarBlock = ({visible, close, constructions, setConstructions, onMarkerClick}): React.FC => {
+    const {construction} = useSelector((state): void => state);
+    const dispatch = useDispatch();
+
+    const back = (): void => dispatch(setCurrentConstructionAction(null));
 
     return <Drawer
         width={500}
@@ -16,9 +20,9 @@ const SidebarBlock = ({visible, setVisible, currentConstruction, setConstruction
         afterVisibleChange={(vis): void => (!vis) ? back() : null}
         visible={visible}
     >
-        {currentConstruction ?
-            <ConstructionBlock construction={currentConstruction} close={close} back={back}/> :
-            <ListBlock close={close} constructions={constructions} onMarkerClick={onMarkerClick}/>
+        {construction.current ?
+            <ConstructionBlock construction={construction.current} close={close} back={back}/> :
+            <ListBlock close={close} constructions={constructions} setConstructions={setConstructions} onMarkerClick={onMarkerClick}/>
         }
     </Drawer>;
 };

@@ -2,13 +2,46 @@ import React, {useEffect, useState} from "react";
 import {useLoadScript} from "@react-google-maps/api";
 import SidebarBlock from "./sidebar/Sidebar";
 import GoogleMapBlock from "./google-map/GoogleMap";
-import {fetchConstructionsByRegionId} from "../../../store/construction/actions";
+import {fetchConstructionsByRegionId, setCurrentConstructionAction} from "../../../store/construction/actions";
 import {useDispatch, useSelector} from "react-redux";
 import LoadingWithText from "../../user/layouts/loading-with-text/LoadingWithText";
 
-const MapConstructions = ({mapPosition}): React.FC => {
+
+const MapV2 = ({mapPosition, regionConstructions}): React.FC => {
     const [visible, setVisible] = useState(false);
-    const [currentConstruction, setConstruction] = useState(null);
+    const [position, setPosition] = useState(mapPosition);
+    const [constructions, setConstructions] = useState(regionConstructions);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setPosition(mapPosition);
+    }, [mapPosition.lat, mapPosition.lng]);
+
+    useEffect(() => {
+        setConstructions(regionConstructions);
+    }, [regionConstructions]);
+
+    const onMarkerClick = (e, construction) => {
+        setVisible(true);
+        dispatch(setCurrentConstructionAction(construction));
+    };
+
+    const close = (): void => setVisible(false);
+
+    return <div className="mapConstructionBlock">
+        <GoogleMapBlock
+            mapPosition={position}
+            constructions={constructions}
+            onMarkerClick={onMarkerClick}/>
+        <SidebarBlock visible={visible}
+                      close={close}
+                      constructions={constructions}
+                      setConstructions={setConstructions}
+                      onMarkerClick={onMarkerClick}/>
+    </div>;
+};
+
+const MapConstructions = ({mapPosition}): React.FC => {
     const {isLoaded} = useLoadScript({googleMapsApiKey: "AIzaSyCwxZJP81_TD9IUlWLe_z56c2OVquaE3Q8"});
     const {region, construction} = useSelector((state): void => state);
     const dispatch = useDispatch();
@@ -19,24 +52,9 @@ const MapConstructions = ({mapPosition}): React.FC => {
             fetchConstructions();
     }, [region.current.id]);
 
-    const onMarkerClick = (e, construction) => {
-        setVisible(true);
-        setConstruction(construction);
-    };
 
     const renderMap = construction.region[region.current.id] ?
-        <div className="mapConstructionBlock">
-            <GoogleMapBlock
-                mapPosition={mapPosition}
-                constructions={construction.region[region.current.id]}
-                onMarkerClick={onMarkerClick}/>
-            <SidebarBlock visible={visible}
-                          setVisible={setVisible}
-                          currentConstruction={currentConstruction}
-                          setConstruction={setConstruction}
-                          constructions={construction.region[region.current.id]}
-                          onMarkerClick={onMarkerClick}/>
-        </div> :
+        <MapV2 mapPosition={mapPosition} regionConstructions={construction.region[region.current.id]}/> :
         <LoadingWithText text="Загрузка конструкций..."/>;
 
     return isLoaded ? renderMap : <LoadingWithText text="Загрузка карты..."/>;

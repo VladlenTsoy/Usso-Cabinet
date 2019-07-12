@@ -12,7 +12,7 @@ import Map from "./map/Map";
 
 const App = (): React.FC => {
     const [loader, setLoader]: boolean = useState(true);
-    const {api, user} = useSelector((state): void => state);
+    const [api, user] = useSelector(({api, user}): any => [api, user]);
     const dispatch = useDispatch();
     const apiChangeAccess = (): void => dispatch(apiChangeAccessToken());
     const fetchCurrentUser = (): void => dispatch(fetchCurrentUserData());
