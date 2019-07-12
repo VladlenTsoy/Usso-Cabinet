@@ -6,7 +6,7 @@ import ListBlock from "./List/List";
 import {setCurrentConstructionAction} from "../../../../store/construction/actions";
 import {useDispatch, useSelector} from "react-redux";
 
-const SidebarBlock = ({visible, close, constructions, setConstructions, onMarkerClick}): React.FC => {
+const SidebarBlock = ({visible, close, onMarkerClick}): React.FC => {
     const {construction} = useSelector((state): void => state);
     const dispatch = useDispatch();
 
@@ -22,7 +22,7 @@ const SidebarBlock = ({visible, close, constructions, setConstructions, onMarker
     >
         {construction.current ?
             <ConstructionBlock construction={construction.current} close={close} back={back}/> :
-            <ListBlock close={close} constructions={constructions} setConstructions={setConstructions} onMarkerClick={onMarkerClick}/>
+            <ListBlock close={close} onMarkerClick={onMarkerClick}/>
         }
     </Drawer>;
 };

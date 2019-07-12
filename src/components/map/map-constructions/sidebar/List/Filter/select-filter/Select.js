@@ -1,20 +1,32 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Form, Select} from "antd";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {setConstructionsForFiltersAction} from "../../../../../../../store/construction/actions";
 
 const {Option} = Select;
 
-const SelectFilterBlock = ({title, name, values, setConstructions}): React.FC => {
+const SelectFilterBlock = ({title, name, value, parent}): React.FC => {
     const {construction, region} = useSelector((state): void => state);
     const [constructions] = useState(construction.region[region.current.id]);
+    const [filters, setFilters] = useState([]);
+    const dispatch = useDispatch();
 
-    const changeSelect = (val): void => setConstructions(val === "all" ? constructions : constructions.filter((construction): any => construction[name] === val));
+    useEffect(() => {
+        let temp = [];
+        construction.filters[parent].map((construction): any => {
+            temp[construction[name]] = construction[value || name];
+        });
+        setFilters(temp);
+    }, [construction.filters[parent]]);
+
+    const changeSelect = (val): void =>
+        dispatch(setConstructionsForFiltersAction(val === "all" ? constructions : constructions.filter((construction): any => construction[name] === val), name));
 
     return <Form.Item label={title}>
         <Select defaultValue="all" onChange={changeSelect}>
             <Option key="all" value="all">Все</Option>
-            {values.length ?
-                values.map((value, key): any =>
+            {filters.length ?
+                filters.map((value, key): any =>
                     <Option key={key} value={key}>{value}</Option>)
                 : null}
         </Select>

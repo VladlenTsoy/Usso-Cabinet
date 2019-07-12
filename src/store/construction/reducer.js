@@ -1,8 +1,15 @@
-import {FETCH_CONSTRUCTIONS_BY_REGION_ID, SET_CURRENT_CONSTRUCTION} from "./actions";
+import {FETCH_CONSTRUCTIONS_BY_REGION_ID, SET_CONSTRUCTIONS_FOR_FILTERS, SET_CURRENT_CONSTRUCTION} from "./actions";
 
 export const constructionReducer = (state = {
     region: [],
-    filters: [],
+    filters: {
+        all:[],
+        zone: [],
+        district_id: [],
+        type_id: [],
+        format_id: [],
+        status: [],
+    },
     current: null,
 }, action): any => {
     switch (action.type) {
@@ -15,6 +22,11 @@ export const constructionReducer = (state = {
             return {
                 ...state,
                 current: action.payload
+            };
+        case SET_CONSTRUCTIONS_FOR_FILTERS:
+            return {
+                ...state,
+                filters: {[action.filter]: action.payload}
             };
         default:
             return state;

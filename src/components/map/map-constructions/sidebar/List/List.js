@@ -2,18 +2,20 @@ import React from "react";
 import './List.less';
 import {Icon, List} from "antd";
 import FilterBlock from "./Filter/Filter";
+import {useSelector} from "react-redux";
 
-const ListBlock = ({constructions, close, onMarkerClick, setConstructions}): React.FC => {
+const ListBlock = ({close, onMarkerClick}): React.FC => {
+    const {construction} = useSelector((state): void => state);
     return <div className="constructions-side-block side-block">
         <div className="header">
             <div className="title-block">Конструкции</div>
             <Icon type="close" onClick={close}/>
         </div>
-        <FilterBlock setConstructions={setConstructions}/>
+        <FilterBlock/>
         <List
             className="list-block"
             itemLayout="horizontal"
-            dataSource={constructions}
+            dataSource={construction.filters.all}
             renderItem={(item): any => (
                 <List.Item>
                     <List.Item.Meta

@@ -2,7 +2,11 @@ import React, {useEffect, useState} from "react";
 import {useLoadScript} from "@react-google-maps/api";
 import SidebarBlock from "./sidebar/Sidebar";
 import GoogleMapBlock from "./google-map/GoogleMap";
-import {fetchConstructionsByRegionId, setCurrentConstructionAction} from "../../../store/construction/actions";
+import {
+    fetchConstructionsByRegionId,
+    setConstructionsForFiltersAction,
+    setCurrentConstructionAction
+} from "../../../store/construction/actions";
 import {useDispatch, useSelector} from "react-redux";
 import LoadingWithText from "../../user/layouts/loading-with-text/LoadingWithText";
 
@@ -10,7 +14,6 @@ import LoadingWithText from "../../user/layouts/loading-with-text/LoadingWithTex
 const MapV2 = ({mapPosition, regionConstructions}): React.FC => {
     const [visible, setVisible] = useState(false);
     const [position, setPosition] = useState(mapPosition);
-    const [constructions, setConstructions] = useState(regionConstructions);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -18,7 +21,7 @@ const MapV2 = ({mapPosition, regionConstructions}): React.FC => {
     }, [mapPosition.lat, mapPosition.lng]);
 
     useEffect(() => {
-        setConstructions(regionConstructions);
+        dispatch(setConstructionsForFiltersAction(regionConstructions, 'all'));
     }, [regionConstructions]);
 
     const onMarkerClick = (e, construction) => {
@@ -31,12 +34,9 @@ const MapV2 = ({mapPosition, regionConstructions}): React.FC => {
     return <div className="mapConstructionBlock">
         <GoogleMapBlock
             mapPosition={position}
-            constructions={constructions}
             onMarkerClick={onMarkerClick}/>
         <SidebarBlock visible={visible}
                       close={close}
-                      constructions={constructions}
-                      setConstructions={setConstructions}
                       onMarkerClick={onMarkerClick}/>
     </div>;
 };

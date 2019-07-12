@@ -37,7 +37,7 @@ const GoogleMapBlock = ({mapPosition, constructions, onMarkerClick}): React.FC =
                 width: 70
             }]}
         >
-            {(clusterer): any => constructions.map((val, key): void =>
+            {(clusterer): any => construction.filters.all.map((val, key): void =>
                 <Marker position={val.position}
                         onClick={(e): void => onMarkerClick(e, val)}
                         key={key}
